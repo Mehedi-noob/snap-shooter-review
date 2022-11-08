@@ -1,57 +1,45 @@
 import React, { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
-
-
-const Register = () => {
+const ManualLogin = () => {
     const [error, setError] = useState('');
-    const { createUser, updateUserProfile} = useContext(AuthContext);
+    const { signIn, setLoading } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleSubmit = event => {
         event.preventDefault();
         const form = event.target;
-        const name = form.name.value;
-        const photoURL = form.photoURL.value;
         const email = form.email.value;
         const password = form.password.value;
 
-        createUser(email, password)
+        signIn(email, password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                setError('');
                 form.reset();
-                handleUpdateUserProfile(name, photoURL);
+                setError('');
+                if (user.uid) {
+                    navigate(from, { replace: true });
+                    console.log("navigate is working")
+                }
             })
-            .catch(e => {
-                console.error(e);
-                setError(e.message);
-            });
-    }
-
-    const handleUpdateUserProfile = (name, photoURL) => {
-        const profile = {
-            displayName: name,
-            photoURL: photoURL
-        }
-
-        updateUserProfile(profile)
-            .then(() => { })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error)
+                setError(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }
 
     return (
         <div className='flex justify-center'>
       <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100">
-        <h1 className="text-2xl font-bold text-center">Register</h1>
+        <h1 className="text-2xl font-bold text-center">Login</h1>
         <form onSubmit={handleSubmit} action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
-          <div className="space-y-1 text-sm">
-            <label className="block dark:text-gray-400">Full name</label>
-            <input type="text" name="name" id="name" placeholder="Enter your Full Name" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
-          </div>
-          <div className="space-y-1 text-sm">
-            <label className="block dark:text-gray-400">Photo url</label>
-            <input type="text" name="photoURL" id="photoURL" placeholder="Enter your photo url" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
-          </div>
           <div className="space-y-1 text-sm">
             <label className="block dark:text-gray-400">Email</label>
             <input type="text" name="email" id="email" placeholder="email" className="w-full px-4 py-3 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-violet-400" />
@@ -92,4 +80,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default ManualLogin;
