@@ -36,7 +36,7 @@ const Services = () => {
                         </figure>
                         <div className="card-body items-center text-center">
                             <h2 className="card-title">{service.s_name}</h2>
-                            <p>{service.s_details.slice(0, 100)}...</p>
+                            <p>{service.s_details.slice(0, 99)}...</p>
                             <div className="card-actions">
                                 <Link to={`/services/${service._id}`}>
                                     <button className="btn btn-primary">See Details</button>
