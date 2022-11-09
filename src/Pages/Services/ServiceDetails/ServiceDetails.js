@@ -10,8 +10,9 @@ const ServiceDetails = () => {
 
     const handleReview = event =>{
         event.preventDefault();
+        const date = new Date();
         const review = event.target.review.value;
-        console.log(review);
+        console.log(review, date);
 
         const reviewDetails = {
             
@@ -19,6 +20,7 @@ const ServiceDetails = () => {
             serviceName: service.s_name,
             email: user.email,
             review,
+            date
         }
     }
 
