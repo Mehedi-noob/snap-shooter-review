@@ -2,6 +2,7 @@ import userEvent from '@testing-library/user-event';
 import React, { useContext } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
+import ServiceReviews from './ServiceReviews';
 
 const ServiceDetails = () => {
     const {user} = useContext(AuthContext);
@@ -22,6 +23,22 @@ const ServiceDetails = () => {
             review,
             date
         }
+
+        fetch('http://localhost:5000/reviews', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(reviewDetails)
+        })
+        .then(res=> res.json())
+        .then(data=> {
+            console.log(data)
+            if(data.acknowledged){
+                event.target.reset();
+            }
+        })
+        .catch(error=> console.error(error));
     }
 
 
@@ -47,6 +64,9 @@ const ServiceDetails = () => {
                             <input  className="mt-3 btn btn-primary" type="submit"/>
                         </form>
                     </div>
+                </div>
+                <div>
+                    <ServiceReviews id={service._id}></ServiceReviews>
                 </div>
             </div>
         </div>
