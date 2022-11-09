@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 import ServiceReviews from './ServiceReviews';
@@ -10,7 +10,7 @@ const ServiceDetails = () => {
     const service = useLoaderData();
 
     const handleReview = event =>{
-        event.preventDefault();
+        // event.preventDefault();
         const date = new Date();
         const review = event.target.review.value;
         console.log(review, date);
@@ -66,7 +66,8 @@ const ServiceDetails = () => {
                     </div>
                 </div>
                 <div>
-                    <ServiceReviews id={service._id}></ServiceReviews>
+                    <ServiceReviews 
+                    id={service._id}></ServiceReviews>
                 </div>
             </div>
         </div>
