@@ -1,8 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import toast, { Toaster } from 'react-hot-toast';
+
+
 
 const MyReviews = () => {
+    
+    const notify = () => toast('deletion successfull');
+
     const [reviews, setReviews] = useState([]);
 
     const { user } = useContext(AuthContext);
@@ -14,17 +20,22 @@ const MyReviews = () => {
     }, []);
 
     const handleDelete = id => {
-        fetch(`http://localhost:5000/reviews/${id}`,{
+        fetch(`http://localhost:5000/reviews/${id}`, {
             method: 'DELETE'
         })
-        .then(res=> res.json())
-        .then(data=> {
-            if(data.deletedCount > 0){
-                const remaining = reviews.filter(rev=> rev._id!== id)
-                setReviews(remaining);
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    const remaining = reviews.filter(rev => rev._id !== id)
+                    setTimeout(() => {
+                        setReviews(remaining);
+                    }, 1000);
+                    
+
+                }
+            })
         setReviews(reviews);
+        
     }
 
     return (
@@ -41,7 +52,11 @@ const MyReviews = () => {
                                 <p>Date: {review.date}</p>
                                 <div className="card-actions justify-end">
                                     <Link to={`/reviews/${review._id}`}><button className="btn btn-warning">Edit Review</button></Link>
-                                    <button onClick={()=>handleDelete(review._id)} className="btn btn-error">Delete Review</button>
+                                    <button onClick={async () => {
+                                        notify();
+                                        handleDelete(review._id);
+                                    }} className="btn btn-error">Delete Review</button><Toaster />
+
                                 </div>
                             </div>
                         </div>
