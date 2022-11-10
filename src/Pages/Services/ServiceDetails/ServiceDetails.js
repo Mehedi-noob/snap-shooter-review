@@ -5,18 +5,18 @@ import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 import ServiceReviews from './ServiceReviews';
 
 const ServiceDetails = () => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const service = useLoaderData();
 
-    const handleReview = event =>{
+    const handleReview = event => {
         // event.preventDefault();
         const date = new Date();
         const review = event.target.review.value;
         console.log(review, date);
 
         const reviewDetails = {
-            
+
             service: service._id,
             serviceName: service.s_name,
             email: user.email,
@@ -31,14 +31,14 @@ const ServiceDetails = () => {
             },
             body: JSON.stringify(reviewDetails)
         })
-        .then(res=> res.json())
-        .then(data=> {
-            console.log(data)
-            if(data.acknowledged){
-                event.target.reset();
-            }
-        })
-        .catch(error=> console.error(error));
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.acknowledged) {
+                    event.target.reset();
+                }
+            })
+            .catch(error => console.error(error));
     }
 
 
@@ -58,16 +58,24 @@ const ServiceDetails = () => {
                     {/* review add field */}
                     <div className='m-5 gap-5 text-center'>
                         <h2>Add your review</h2>
-                        <p className='m-5'>If you want to add your review please <Link className='bg-error rounded text-black' to='/login'>Log in</Link></p>
-                        <form onSubmit={handleReview} action="">
-                            <input type="text" name="review" id="review" placeholder="Type here" className="input input-bordered input-warning w-full max-w-xs" required/>
-                            <input  className="mt-3 btn btn-primary" type="submit"/>
-                        </form>
+                        {
+                            user?.uid ?
+                                <form onSubmit={handleReview} action="">
+                                    <textarea type="text" name="review" id="review" placeholder="Type here" className="input input-bordered input-warning w-full max-w-xs" required />
+                                    <input className="mt-3 btn btn-primary" type="submit" />
+                                </form>
+
+                                :
+                                <div>
+                                    <p className='m-5'>If you want to add your review please <Link className='bg-error rounded text-black' to='/login'>Log in</Link></p>
+                                </div>
+                        }
+
                     </div>
                 </div>
                 <div>
-                    <ServiceReviews 
-                    id={service._id}></ServiceReviews>
+                    <ServiceReviews
+                        id={service._id}></ServiceReviews>
                 </div>
             </div>
         </div>
