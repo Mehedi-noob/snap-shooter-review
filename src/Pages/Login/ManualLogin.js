@@ -2,41 +2,55 @@ import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 const ManualLogin = () => {
-    const [error, setError] = useState('');
-    const { signIn, setLoading } = useContext(AuthContext);
-    const navigate = useNavigate();
-    const location = useLocation();
+  const [error, setError] = useState('');
+  const { signIn, setLoading, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || '/';
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        const form = event.target;
-        const email = form.email.value;
-        const password = form.password.value;
+  const handleSubmit = event => {
+    setLoading(true);
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
 
-        signIn(email, password)
-            .then(result => {
-                const user = result.user;
-                console.log(user);
-                form.reset();
-                setError('');
-                if (user.uid) {
-                    navigate(from, { replace: true });
-                    console.log("navigate is working")
-                }
-            })
-            .catch(error => {
-                console.error(error)
-                setError(error.message);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
-    }
+    signIn(email, password)
+      .then(result => {
+        const user = result.user;
 
-    return (
-        <div className='flex justify-center'>
+        const currentUser = {
+          email: user.email
+        }
+
+        fetch('http://localhost:5000/jwt', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(currentUser)
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            localStorage.setItem('SNS-token', data.token);
+            navigate(from, { replace: true });
+          });
+
+      })
+
+      .catch(error => {
+        console.error(error)
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+  }
+
+  return (
+    <div className='flex justify-center'>
       <div className="w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100">
         <h1 className="text-2xl font-bold text-center">Login</h1>
         <form onSubmit={handleSubmit} action="" className="space-y-6 ng-untouched ng-pristine ng-valid">
@@ -58,8 +72,11 @@ const ManualLogin = () => {
         <p className="text-xs text-center sm:px-6 dark:text-gray-400">Don't have an account?
         </p>
       </div>
+      {
+        loading&&<div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+      }
     </div>
-    );
+  );
 };
 
 export default ManualLogin;

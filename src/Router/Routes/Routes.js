@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { default as Main } from "../../Layout/Main/Main";
 import AddService from "../../Pages/AddService/AddService";
+import Blog from "../../Pages/Blog/Blog";
+import ErrorElement from "../../Pages/ErrorElement/ErrorElement";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyReviews from "../../Pages/MyReviews/MyReviews";
@@ -14,6 +16,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <ErrorElement></ErrorElement>,
         children: [
             {
                 path: '/',
@@ -27,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>
+            },
+            {
+                path: '/blog',
+                element: <Blog></Blog>
             },
             {
                 path: '/services',
@@ -44,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: '/addservice',
                 element: <PrivateRoute><AddService></AddService></PrivateRoute>
+            },
+            {
+                path: '/privateRoute',
+                element: <PrivateRoute></PrivateRoute>
             },
             {
                 path: '/reviews/:id',

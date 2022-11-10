@@ -1,28 +1,35 @@
-import userEvent from '@testing-library/user-event';
 import React, { useContext, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 import ServiceReviews from './ServiceReviews';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 
 const ServiceDetails = () => {
     const { user } = useContext(AuthContext);
+    console.log(user);
 
     const service = useLoaderData();
 
     const handleReview = event => {
-        // event.preventDefault();
+        event.preventDefault();
         const date = new Date();
         const review = event.target.review.value;
+        const name = event.target.name.value;
+        const photoURL = event.target.photoURL.value;
         console.log(review, date);
 
         const reviewDetails = {
 
             service: service._id,
             serviceName: service.s_name,
+            userName: name,
+            image: photoURL,
             email: user.email,
             review,
             date
         }
+        console.log(reviewDetails)
 
         fetch('http://localhost:5000/reviews', {
             method: 'POST',
@@ -33,10 +40,10 @@ const ServiceDetails = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                if (data.acknowledged) {
-                    event.target.reset();
-                }
+                // console.log(data)
+                // if (data.acknowledged) {
+                //     event.target.reset();
+                // }
             })
             .catch(error => console.error(error));
     }
@@ -44,6 +51,9 @@ const ServiceDetails = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>SNS-service-details</title>
+            </Helmet>
             <div className="flex flex-col w-full">
                 <div className="grid card bg-base-300 rounded-box place-items-center p-5 gap-5">
                     <h1 className="text-2xl">Service section</h1>
@@ -61,13 +71,15 @@ const ServiceDetails = () => {
                         {
                             user?.uid ?
                                 <form onSubmit={handleReview} action="">
+                                    <input type="text" name="name" id="name" placeholder="type Name" className="input input-bordered input-warning w-full max-w-xs" required />
+                                    <input type="text" name="photoURL" id="photoURL" placeholder="photoURL" className="input input-bordered input-warning w-full max-w-xs" required />
                                     <textarea type="text" name="review" id="review" placeholder="Type here" className="input input-bordered input-warning w-full max-w-xs" required />
                                     <input className="mt-3 btn btn-primary" type="submit" />
                                 </form>
 
                                 :
                                 <div>
-                                    <p className='m-5'>If you want to add your review please <Link className='bg-error rounded text-black' to='/login'>Log in</Link></p>
+                                    <p className='m-5'>If you want to add your review please <Link className='bg-error rounded text-black' to='/privateRoute'>Log in</Link></p>
                                 </div>
                         }
 

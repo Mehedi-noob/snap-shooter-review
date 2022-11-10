@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
@@ -12,6 +13,9 @@ const Home = () => {
 
     return (
         <div className='grid gap-y-5'>
+            <Helmet>
+                <title>SNS Home</title>
+            </Helmet>
             {/* banner start  */}
             <div className="p-6 py-12 dark:bg-violet-400 dark:text-gray-900">
                 <div className="container mx-auto">
@@ -37,7 +41,7 @@ const Home = () => {
                                 {/* photo view portion start */}
                                 <PhotoProvider>
                                     <PhotoView src={service.s_image}>
-                                        <img className='cursor-pointer' src={service.s_image} alt="" />
+                                        <img className='cursor-pointer' src={service.s_image} alt="image availabe but CORB problem" />
                                     </PhotoView>
                                 </PhotoProvider>
                                 {/* photo view portion end */}
@@ -63,34 +67,10 @@ const Home = () => {
             <FAQ></FAQ>
 
             {/* timer */}
-            <div className='grid grid-cols-1 gap-y-5 justify-self-center'>
-                <h1 className='text-xl'>Hurry up and try the services...time is running out</h1>
-                <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
-                    <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                        <span className="countdown font-mono text-5xl">
-                            <span style={{ '--value': 15 }}></span>
-                        </span>
-                        days
-                    </div>
-                    <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                        <span className="countdown font-mono text-5xl">
-                            <span style={{ "--value": 10 }}></span>
-                        </span>
-                        hours
-                    </div>
-                    <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                        <span className="countdown font-mono text-5xl">
-                            <span style={{ "--value": 24 }}></span>
-                        </span>
-                        min
-                    </div>
-                    <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                        <span className="countdown font-mono text-5xl">
-                            <span style={{ "--value": 36 }}></span>
-                        </span>
-                        sec
-                    </div>
-                </div>
+            <div className='grid grid-cols-1 text-center border-double border-4 border-sky-500 rounded-box p-20'>
+                <h1 className='text-xl'>Photography's Passion to Profession (My life)</h1>
+                <p>Photographs are the universal language of our era. Everyone has hundreds, maybe thousands in their pocket. Weightless, they turn the scale when the argument is: What happened here? Images don’t age or warp. A great photographer’s strings never go out of tune. It is for this reason that we need photographers. They are the ones who sort all the chaos of the world into images that bring clarity to the free-for-all of life. They are the witnesses and artists who can distill the mayhem and beauty that surrounds us. They call our attention to the things we miss in our everyday lives and they call our attention to events and people at a great distance from our own patch of the universe. When they direct our eyes and hearts with precision and honesty, we know what we know differently and better. Photographers teach us to look again, look harder. Look through their eyes.</p>
+                <Link to="https://time.com/4839246/photographers-passion/"><button  className='btn btn-info'>ask others</button></Link>
             </div>
 
             {/* drawer start  */}

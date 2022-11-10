@@ -1,6 +1,10 @@
 import React from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const AddService = () => {
+    const notify = () => toast('service successfully added');
 
     const handleAddService = event => {
         event.preventDefault();
@@ -35,16 +39,20 @@ const AddService = () => {
                 }
             })
             .catch(error => console.error(error));
+            notify()
     }
     return (
         <div>
+            <Helmet>
+                <title>SNS-add-service</title>
+            </Helmet>
             <form onSubmit={handleAddService} action="">
-                <input type="text" name="name" id="name" placeholder="Type name" className="input input-bordered input-warning w-full max-w-xs" required />
+                <input type="text" name="name" id="name" placeholder="Type service name" className="input input-bordered input-warning w-full max-w-xs" required />
                 <input type="text" name="image" id="image" placeholder="input image url" className="input input-bordered input-warning w-full max-w-xs" required />
-                <input type="text" name="rating" id="rating" placeholder="input rating" className="input input-bordered input-warning w-full max-w-xs" required />
+                <input type="text" name="rating" id="rating" placeholder="input service rating" className="input input-bordered input-warning w-full max-w-xs" required />
                 <input type="text" name="price" id="price" placeholder="input price" className="input input-bordered input-warning w-full max-w-xs" required />
                 <textarea type="text" name="details" id="details" placeholder="Give service details" className="input input-bordered input-warning w-full max-w-xs" required />
-                <input className="mt-3 btn btn-primary" type="submit" />
+                <input className="mt-3 btn btn-primary" type="submit" /><Toaster />
             </form>
         </div>
     );

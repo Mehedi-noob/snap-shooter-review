@@ -1,6 +1,11 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import Favicon from 'react-favicon';
+
+
+
 
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
@@ -21,6 +26,9 @@ const Services = () => {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+            <Helmet>
+                <title>SNS-services</title>
+            </Helmet>
             {
                 !loading?
                 services.map(service => <div key={service._id}>
@@ -29,7 +37,7 @@ const Services = () => {
                             {/* photo view portion start */}
                             <PhotoProvider>
                                 <PhotoView src={service.s_image}>
-                                    <img className='cursor-pointer' src={service.s_image} alt="" />
+                                    <img className='cursor-pointer' src={service.s_image} alt="image availabe but CORB problem" />
                                 </PhotoView>
                             </PhotoProvider>
                             {/* photo view portion end */}
