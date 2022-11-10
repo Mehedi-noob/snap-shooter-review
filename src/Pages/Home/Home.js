@@ -48,6 +48,7 @@ const Home = () => {
                             </figure>
                             <div className="card-body items-center text-center">
                                 <h2 className="card-title">{service.s_name}</h2>
+                                <h2 className="card-title">Price: {service.s_price}$</h2>
                                 <p>{service.s_details.slice(0, 99)}...</p>
                                 <div className="card-actions">
                                     <Link to={`/services/${service._id}`}>

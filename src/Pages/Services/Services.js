@@ -17,7 +17,7 @@ const Services = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:5000/services')
+        fetch('https://service-review-server-rust.vercel.app/services')
             .then(res => res.json())
             .then(data => setServices(data))
             .then (setLoading(false));
@@ -44,6 +44,7 @@ const Services = () => {
                         </figure>
                         <div className="card-body items-center text-center">
                             <h2 className="card-title">{service.s_name}</h2>
+                            <h2 className="card-title">Price: {service.s_price}$</h2>
                             <p>{service.s_details.slice(0, 99)}...</p>
                             <div className="card-actions">
                                 <Link to={`/services/${service._id}`}>

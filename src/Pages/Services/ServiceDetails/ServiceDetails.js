@@ -31,7 +31,7 @@ const ServiceDetails = () => {
         }
         console.log(reviewDetails)
 
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://service-review-server-rust.vercel.app/reviews', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -60,6 +60,7 @@ const ServiceDetails = () => {
                     <h1 className='m-5'>{service.s_name}</h1>
                     <img className='rounded-box' src={service.s_image} alt="" />
                     <h1>Service rating: {service.s_rating}</h1>
+                    <h1>Service price: {service.s_price}</h1>
                     <p>{service.s_details}</p>
                 </div>
                 <div className="divider"></div>

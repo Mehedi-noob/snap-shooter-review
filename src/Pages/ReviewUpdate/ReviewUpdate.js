@@ -18,7 +18,7 @@ const ReviewUpdate = () => {
         const upReview = form.review.value;
         console.log(upReview, reviewObj._id);
 
-        fetch(`http://localhost:5000/reviews/${reviewObj._id}`, {
+        fetch(`https://service-review-server-rust.vercel.app/reviews/${reviewObj._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

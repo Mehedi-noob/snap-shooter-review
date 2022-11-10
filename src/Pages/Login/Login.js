@@ -26,7 +26,7 @@ const Login = () => {
                     email: user.email
                 }
 
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://service-review-server-rust.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

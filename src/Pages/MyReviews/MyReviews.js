@@ -17,7 +17,7 @@ const MyReviews = () => {
     const { user, logOut } = useContext(AuthContext);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/myreviews?email=${user.email}`, {
+        fetch(`https://service-review-server-rust.vercel.app/myreviews?email=${user.email}`, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('SNS-token')}`
             }
@@ -35,7 +35,7 @@ const MyReviews = () => {
     
     
     const handleDelete = id => {
-        fetch(`http://localhost:5000/reviews/${id}`, {
+        fetch(`https://service-review-server-rust.vercel.app/reviews/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

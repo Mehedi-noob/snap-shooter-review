@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                loader: ()=> fetch('http://localhost:5000/serviceDemo'),
+                loader: ()=> fetch('https://service-review-server-rust.vercel.app/serviceDemo'),
                 element: <Home></Home>
             },
             {
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/services/:id',
-                loader: ({params})=> fetch(`http://localhost:5000/services/${params.id}`),
+                loader: ({params})=> fetch(`https://service-review-server-rust.vercel.app/services/${params.id}`),
                 element: <ServiceDetails></ServiceDetails>
             },
             {
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/reviews/:id',
-                loader: ({params})=> fetch(`http://localhost:5000/reviews?_id=${params.id}`),
+                loader: ({params})=> fetch(`https://service-review-server-rust.vercel.app/reviews?_id=${params.id}`),
                 element: <PrivateRoute><ReviewUpdate></ReviewUpdate></PrivateRoute>
             }
         ]
