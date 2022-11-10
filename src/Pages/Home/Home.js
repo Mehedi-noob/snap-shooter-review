@@ -4,10 +4,10 @@ import { useLoaderData } from 'react-router-dom';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import { Link } from 'react-router-dom';
+import FAQ from './FAQ';
 
 const Home = () => {
-    const services = useLoaderData();
-    const serviceDemo = services.slice(0, 3);
+    const serviceDemo = useLoaderData();
 
     return (
         <div>
@@ -53,8 +53,13 @@ const Home = () => {
                         </div>
                     </div>)
                 }
-            </div>
 
+            </div>
+            <div className='grid grid-cols-1 justify-items-end'><Link to='/services'><button className='btn btn-primary'>See All Services</button></Link></div>
+            {/* serviceDemo end  */}
+
+            {/* FAQ start  */}
+            <FAQ></FAQ>
         </div>
     );
 };
