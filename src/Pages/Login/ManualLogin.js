@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 const ManualLogin = () => {
@@ -43,6 +44,7 @@ const ManualLogin = () => {
       .catch(error => {
         console.error(error)
         setError(error.message);
+        toast(`Login Unsuccessfull ${error.message}`);
       })
       .finally(() => {
         setLoading(false);
